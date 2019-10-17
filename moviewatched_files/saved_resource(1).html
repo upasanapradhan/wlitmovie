@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<!-- saved from url=(0035)https://fiddle.jshell.net/_display/ -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  
+  <title></title>
+  
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="googlebot" content="noindex, nofollow">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+  <script type="text/javascript" src="./dummy.js.download"></script>
+
+    <link rel="stylesheet" type="text/css" href="./result-light.css">
+
+      <script type="text/javascript" src="./axios.min.js.download"></script>
+
+  <style id="compiled-css" type="text/css">
+      
+  </style>
+
+
+  <!-- TODO: Missing CoffeeScript 2 -->
+
+  <script type="text/javascript">//<![CDATA[
+
+    window.onload=function(){
+      
+
+
+    }
+
+  //]]></script>
+
+</head>
+<body>
+    
+
+<h1 id="heading">
+Movies to Watch
+</h1>
+          
+         
+<button onclick="getData()">Show Movies</button>
+
+<ul id="l">
+ <li id="1" style="text-decoration: line-through;">the fault in our stars<input type="button" value="watch" id="1"></li><li id="2" style="text-decoration: line-through;">Captain Marvel<input type="button" value="watch" id="2"></li><li id="3" style="text-decoration: line-through;">Shutter Island<input type="button" value="watch" id="3"></li></ul>
+
+
+<script>
+  
+        function alreadywatched(id) 
+        {
+        document.getElementById(this.id).style="text-decoration: line-through";
+        }
+async function getData()
+{
+		
+		try
+    {
+    		let data = await axios.get('http://localhost:3000/movies')
+        var movie = data;
+        var i
+        for (i=0; i < movie.data.length; i++)
+        {
+				var moviename = movie.data[i].name;
+        console.log(moviename)
+        var listItem = document.createElement('li');
+            listItem.id=(i+1)
+            listItem.innerHTML= moviename
+        var valButton = document.createElement("INPUT"); 
+            valButton.setAttribute("type", "button"); 
+            valButton.setAttribute("value", "watch");  
+            //valButton.setAttribute("id", "watched");
+            valButton.id = (i + 1);
+            //valButton.object = this;
+            //listItem.innerHTML = moviename
+        var u=document.getElementById('l')
+        
+           u.appendChild(listItem).appendChild(valButton); 
+           valButton.addEventListener('click', alreadywatched);
+           };
+            document.getElementById(this.id).onclick = function() {alreadywatched(this.id)
+      }
+       
+      
+		}
+    catch(err){
+         			console.log("No Movies Found",err);
+               }
+}
+
+/* getData(); */
+
+</script>
+
+
+
+
+  
+  <script>
+    // tell the embed parent frame the height of the content
+    if (window.parent && window.parent.parent){
+      window.parent.parent.postMessage(["resultsFrame", {
+        height: document.body.getBoundingClientRect().height,
+        slug: ""
+      }], "*")
+    }
+
+    // always overwrite window.name, in case users try to set it manually
+    window.name = "result"
+  </script>
+
+
+</body></html>
